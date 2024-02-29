@@ -1,10 +1,13 @@
 package com.example.StudentProjectinfo.service;
 
 import com.example.StudentProjectinfo.dto.ProjectRequest;
+import com.example.StudentProjectinfo.exception.UserNotFoundException;
 import com.example.StudentProjectinfo.model.Project;
 import com.example.StudentProjectinfo.repository.Projectrepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 
@@ -34,5 +37,18 @@ public class Projectservice {
 
         return repo.save(project);
     }
+    public List<Project> getALlProjects() {
+        return repo.findAll();
+    }
+
+    public Project getProjectByRollno(String rollno) throws UserNotFoundException {
+        Project p = repo.findByRollno(rollno);
+        if(p != null){
+            return p;
+        } else {
+            throw new UserNotFoundException("User not found with roll number: " + rollno);
+        }
+    }
+
 
 }
